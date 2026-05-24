@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlayGround</title>
+    <style>
+.button{
+    display: inline-block;
+}
+button{
+    border-radius: 30px 30px 30px 30px;
+    background-color: #f8f8c5;
+    border: none;
+    color: #ed734a;
+    font-weight: 600;
+    padding: 10px 15px;
+    cursor:pointer;
+    font-size: 40px;
+}
+a{
+    display: block;
+    text-decoration: none;
+    font-size: 30px;
+    color: #ffa181;
+    padding: 10px 30px;
+}
+.content{
+    width: 350px;
+    display: none;
+    border-radius: 0px 0px 20px 20px;
+    background-color: #fafcdcc1;
+    position: absolute;
+    box-shadow: 7px 7px 15px #980f0f81;
+}
+
+.button:hover .content{
+    display: block;
+}
+.button:hover button{
+    border-radius: 30px 30px 30px 0px;
+    background-color: #f4deae;
+    color: #e73f1d;
+    font-size: 45px;
+}
+a:hover{
+    color: #f17252;
+    font-size: 35px;
+    background-color: #f7ecbec1;
+}
+    </style>
+</head>
+
+
+<body>
+    <div class="button">
+        <button>What is the best game?</button>
+        <div class="content">
+            <a href="">Valorants</a>
+            <a href="">Leaugue of Legends</a>
+            <a href="">Minecraft</a>
+        </div>
+    </div>
+</body>
+</html>

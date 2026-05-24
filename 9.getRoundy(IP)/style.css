@@ -1,0 +1,105 @@
+body {
+    position: relative;
+    height: 97vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#point{
+    position: absolute;
+    z-index: 2;
+    width: 50px;
+    height: 35vh;
+    background-color: antiquewhite;
+    top: 10vh;
+    right: 25vw;
+}
+#point::before{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    content: var(--score);
+    font-size: 2rem;
+    color: rgb(247, 244, 239);
+    background-color: rgb(242, 169, 114);
+    position: absolute;
+    z-index: 2;
+    width: 50px;
+    height: 50px;
+    top: -5vh;
+}
+
+#container {
+    height: 50%;
+    aspect-ratio: 1;
+    margin-bottom: 9vh;
+    border: 1px solid black;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.grids {
+    transition: 0.15s ease-out;
+    border: 1px solid rgba(0, 0, 0, 0.159); 
+}
+.grids:nth-child(46) {
+    background-color: rgba(125, 93, 88, 0.807);
+}
+
+#arrowkeys {
+    position: relative;
+    margin: 0px;
+    margin-bottom: 9vh;
+    width: 32vb;
+    height: 21vh;
+    border: 1px  solid black;
+}
+
+.arrows {
+    transition: 0.25s ease-out;
+    position: absolute;
+    width: 10vb;
+    height: 10vh;
+    border: 1px solid black;
+}
+
+#up {
+    left: 11vb;
+}
+
+#left {
+    top: 11vh;
+}
+
+#down {
+    left: 11vb;
+    top: 11vh;
+}
+
+#right {
+    left: 22vb;
+    top: 11vh;
+}
+#anounce {
+    position: absolute;
+    width: 80vb;
+    font-size:  4rem;
+    font-family: 'Georgia';
+    text-align: center;
+    border-radius: 20px;
+    background-color: rgba(255, 232, 201, 0.811);
+    color: rgb(162, 103, 25);
+    margin-top: 19vh;
+}
+#timer {
+    position: absolute;
+    font-size:  4rem;
+    text-align: center;
+    border-radius: 20px;
+    background-color: rgba(255, 232, 201, 0.811);
+    color: rgb(162, 103, 25);
+    top: 5vh;
+    left: 40vb;
+}

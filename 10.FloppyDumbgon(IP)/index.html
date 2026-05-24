@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Floppy Dumbgon</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="./favicon/FloppyDumbgonFavicon.png">
+    <script defer src="script.js"></script>
+</head>
+<body>
+    <canvas id="cv"></canvas>
+    <div id="scoreboard">
+        <div id="score" class="score">100</div>
+        <div id="highScore" class="score">100</div>
+    </div>
+    
+    <div id="setting" class="close">
+        <button class="toggle-btn">
+            <img src="icons/settings_24dp_1F1F1F_FILL0_wght600_GRAD0_opsz24.svg">
+        </button>
+        <div class="container">
+            <h3>Setting Options</h3>
+            <ul class="setting-container">
+            <li class="settings" data-setting="gameVel">
+                <img src="icons/speed_24dp_1F1F1F_FILL0_wght600_GRAD0_opsz24.svg">
+                <span>Game Speed</span>
+                <span class="scaler">1</span>
+                <button data-action="increase">
+                    <img src="icons/keyboard_arrow_up_24dp_1F1F1F_FILL0_wght600_GRAD0_opsz24.svg">
+                </button>
+                <button data-action="decrease">
+                    <img src="icons/keyboard_arrow_down_24dp_1F1F1F_FILL0_wght600_GRAD0_opsz24.svg">
+                </button>
+            </li>
+
+            <li class="settings" data-setting="birdAce">
+                <img src="icons/keyboard_double_arrow_down_24dp_1F1F1F_FILL0_wght600_GRAD0_opsz24.svg">
+                <span>Gravitational Aceleration</span>
+                <span class="scaler">1</span>
+                <button data-action="increase">
+                    <img src="icons/keyboard_arrow_up_24dp_1F1F1F_FILL0_wght600_GRAD0_opsz24.svg">
+                </button>
+                <button data-action="decrease">
+                    <img src="icons/keyboard_arrow_down_24dp_1F1F1F_FILL0_wght600_GRAD0_opsz24.svg">
+                </button>
+            </li>
+
+            <li class="settings" data-setting="flapPower">
+                <img src="icons/arrow_warm_up_24dp_1F1F1F_FILL0_wght600_GRAD0_opsz24.svg">
+                <span>Flap Power</span>
+                <span class="scaler">1</span>
+                <button data-action="increase">
+                    <img src="icons/keyboard_arrow_up_24dp_1F1F1F_FILL0_wght600_GRAD0_opsz24.svg">
+                </button>
+                <button data-action="decrease">
+                    <img src="icons/keyboard_arrow_down_24dp_1F1F1F_FILL0_wght600_GRAD0_opsz24.svg">
+                </button>
+            </li>
+
+            <li class="settings" data-setting="minGap">
+                <img src="icons/text_select_move_down_24dp_1F1F1F_FILL0_wght600_GRAD0_opsz24.svg">
+                <span>Minimum Gap</span>
+                <span class="scaler">1</span>
+                <button data-action="increase">
+                    <img src="icons/keyboard_arrow_up_24dp_1F1F1F_FILL0_wght600_GRAD0_opsz24.svg">
+                </button>
+                <button data-action="decrease">
+                    <img src="icons/keyboard_arrow_down_24dp_1F1F1F_FILL0_wght600_GRAD0_opsz24.svg">
+                </button>
+            </li>
+
+            <li class="settings" data-setting="maxGap">
+                <img src="icons/text_select_move_up_24dp_1F1F1F_FILL0_wght600_GRAD0_opsz24.svg">
+                <span>Maximum Gap</span>
+                <span class="scaler">1</span>
+                <button data-action="increase">
+                    <img src="icons/keyboard_arrow_up_24dp_1F1F1F_FILL0_wght600_GRAD0_opsz24.svg">
+                </button>
+                <button data-action="decrease">
+                    <img src="icons/keyboard_arrow_down_24dp_1F1F1F_FILL0_wght600_GRAD0_opsz24.svg">
+                </button>
+            </li>
+
+            <li class="settings" data-setting="pipeWidth">
+                <img src="icons/fit_width_24dp_1F1F1F_FILL0_wght600_GRAD0_opsz24.svg">
+                <span>Pipe Width</span>
+                <span class="scaler">1</span>
+                <button data-action="increase">
+                    <img src="icons/keyboard_arrow_up_24dp_1F1F1F_FILL0_wght600_GRAD0_opsz24.svg">
+                </button>
+                <button data-action="decrease">
+                    <img src="icons/keyboard_arrow_down_24dp_1F1F1F_FILL0_wght600_GRAD0_opsz24.svg">
+                </button>
+            </li>
+
+            <li class="settings" data-setting="pipeSpawnRate">
+                <img src="icons/arrow_upload_progress_24dp_1F1F1F_FILL0_wght600_GRAD0_opsz24.svg">
+                <span>Pipe Spawn Rate</span>
+                <span class="scaler">1</span>
+                <button data-action="increase">
+                    <img src="icons/keyboard_arrow_up_24dp_1F1F1F_FILL0_wght600_GRAD0_opsz24.svg">
+                </button>
+                <button data-action="decrease">
+                    <img src="icons/keyboard_arrow_down_24dp_1F1F1F_FILL0_wght600_GRAD0_opsz24.svg">
+                </button>
+            </li>
+        </ul>
+        </div>
+        
+    </div>
+    
+</body>
+</html>

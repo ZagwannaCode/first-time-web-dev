@@ -1,0 +1,51 @@
+body{
+    position: relative;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+canvas{
+    z-index: 1;
+    margin-bottom: 7%;
+}
+
+#first{
+    position: absolute;
+    top: 35%;
+    color: rgba(0, 0, 0, 0.596);
+    font-size: 3rem;
+}
+
+#congrat{
+    display: none;
+    position: absolute;
+    height: auto;
+    text-align: center;
+    width: 500px;
+    line-height: 100px;
+    z-index: 2;
+    top: 23%;
+    border-radius: 10px;
+    color: rgba(0, 0, 0, 0);
+    background-color: rgba(255, 235, 205, 0.763);
+    font-size: 3rem;
+    transition: 1s ease;
+}
+
+input{
+    margin-bottom: 10px;
+}
+
+button{
+    margin-bottom: 5%;
+}
+
+#svg{
+    position: absolute;
+    z-index: 2;
+    top: 29%;
+    right: 31%;
+    fill: rgb(242, 194, 152);
+}

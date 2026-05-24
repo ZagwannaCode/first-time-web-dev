@@ -1,0 +1,58 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    font-weight: bolder;
+    font-family:cursive;
+    font-size: 4.5rem;
+    height: 85vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+.row{
+    display: flex;
+}
+.letter {
+    color: red;
+    position: relative;
+    cursor: crosshair;
+    animation: colorchanging 3.5s infinite;
+}
+.letterfake{
+    display: block;
+    color: rgb(0, 0, 0);
+    position: absolute;
+    top: 0px;
+    cursor: crosshair;
+    opacity: 1;
+    transition: opacity 3s ease-in;
+}
+
+
+.letterfake:hover{
+    opacity: 0;
+    transition: opacity 0s;
+}
+.letter:hover .letterfake{
+    opacity: 0;
+}
+.letter:hover{
+    animation-play-state: paused;
+}
+
+@keyframes colorchanging{
+    7%{color: red}
+    20%{color: rgb(255, 89, 0)}
+    30%{color: rgb(255, 191, 0)}
+    40%{color: rgb(212, 255, 0)}
+    50%{color: rgb(60, 255, 0)}
+    60%{color: rgb(0, 255, 225)}
+    70%{color: rgb(0, 132, 255)}
+    80%{color: rgb(123, 0, 255)}
+    90%{color: rgb(255, 0, 111)}
+    100%{color: rgb(255, 0, 55)}
+}

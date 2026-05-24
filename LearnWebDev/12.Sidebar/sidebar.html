@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sidebar</title>
+    <link rel="stylesheet" href="sidebar.css">
+    <script src="sidebar.js" defer></script>
+</head>
+<body>
+    <nav id="sidebar">
+        <ul>
+            <li>
+                <img src="./icons/logo5.png" width="24px" height="24px"></img>
+                <span class="logo">Zag</span>
+                <button onclick="toggleSidebar()" class="toggle-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="M111.87-228.28v-91h736.26v91H111.87Zm0-206.22v-91h736.26v91H111.87Zm0-206.22v-91h736.26v91H111.87Z"/></svg>
+                </button>
+            </li>
+            <li class="active">
+                <a href="#">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="M242.87-202.87H354.5V-445.5h251v242.63h111.63v-355.7L480-736.41 242.87-558.57v355.7Zm-91 91v-492.2L480-850.28l328.13 246.13v492.28H518.09v-246.22h-76.18v246.22H151.87ZM480-469.52Z"/></svg>
+                    <span>Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="M518.09-603.35v-251h336.26v251H518.09ZM105.65-433.78v-420.57h336.26v420.57H105.65Zm412.44 327.41v-420.56h336.26v420.56H518.09Zm-412.44 0v-251h336.26v251H105.65Zm91-418.41h154.26v-238.57H196.65v238.57Zm412.44 327.41h154.26v-238.56H609.09v238.56Zm0-496.98h154.26v-69H609.09v69ZM196.65-197.37h154.26v-69H196.65v69Zm154.26-327.41Zm258.18-169.57Zm0 258.42ZM350.91-266.37Z"/></svg>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <button onclick="toggleDropdown(this)" class="dropdown-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="M559.28-313.3h83.83v-82.87h83.59V-480h-83.59v-83.11h-83.83V-480H475.7v83.83h83.58v82.87ZM162.87-151.87q-37.78 0-64.39-26.61t-26.61-64.39v-474.26q0-37.78 26.61-64.39t64.39-26.61h233.54L480-724.54h317.13q37.78 0 64.39 26.61 26.61 26.6 26.61 64.39v390.67q0 37.78-26.61 64.39t-64.39 26.61H162.87Zm0-91h634.26v-390.67H442.46l-83.59-83.59h-196v474.26Zm0 0v-474.26 474.26Z"/></svg>
+                    <span>Create</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="M480-336.35 232.35-584 296-647.65l184 184 184-184L727.65-584 480-336.35Z"/></svg>
+                </button>
+                <ul class="sub-menu">
+                    <li><a href="#">Folder</a></li>
+                    <li><a href="#">Document</a></li>
+                    <li><a href="#">Project</a></li>
+                </ul>
+            </li>
+            <li>
+                <button onclick="toggleDropdown(this)" class="dropdown-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="M223.2-192.35 73.3-342l63.9-63.65 85 85 170-170.24L455.85-426 223.2-192.35Zm0-320L73.3-662l63.9-63.65 85 85 170-170.24L455.85-746 223.2-512.35Zm298 237.85v-91h365.5v91H521.2Zm0-320v-91h365.5v91H521.2Z"/></svg>
+                    <span>Todo-list</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="M480-336.35 232.35-584 296-647.65l184 184 184-184L727.65-584 480-336.35Z"/></svg>
+                </button>
+                <ul class="sub-menu">
+                    <li><a href="#">Work</a></li>
+                    <li><a href="#">Private</a></li>
+                    <li><a href="#">Coding</a></li>
+                    <li><a href="#">Gardening</a></li>
+                    <li><a href="#">School</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="M202.87-71.87q-37.78 0-64.39-26.61t-26.61-64.39v-554.26q0-37.78 26.61-64.39t64.39-26.61H240v-80h85.5v80h309v-80H720v80h37.13q37.78 0 64.39 26.61t26.61 64.39v554.26q0 37.78-26.61 64.39t-64.39 26.61H202.87Zm0-91h554.26V-560H202.87v397.13Zm0-477.13h554.26v-77.13H202.87V-640Zm0 0v-77.13V-640ZM480-398.09q-17.81 0-29.86-12.09-12.05-12.1-12.05-29.82t12.05-29.82q12.05-12.09 29.86-12.09t29.86 12.09q12.05 12.1 12.05 29.82t-12.05 29.82q-12.05 12.09-29.86 12.09Zm-189.82-12.09q-12.09-12.1-12.09-29.82t12.09-29.82q12.1-12.09 29.82-12.09t29.82 12.09q12.09 12.1 12.09 29.82t-12.09 29.82q-12.1 12.09-29.82 12.09t-29.82-12.09ZM640-398.09q-17.48 0-29.7-12.09-12.21-12.1-12.21-29.82t12.21-29.82q12.22-12.09 29.82-12.09t29.7 12.09q12.09 12.1 12.09 29.82t-12.05 29.82q-12.05 12.09-29.86 12.09Zm-160 160q-17.81 0-29.86-12.21-12.05-12.22-12.05-29.82t12.05-29.7q12.05-12.09 29.86-12.09t29.86 12.05q12.05 12.05 12.05 29.86 0 17.48-12.05 29.7-12.05 12.21-29.86 12.21ZM290.18-250.3q-12.09-12.22-12.09-29.82t12.09-29.7q12.1-12.09 29.82-12.09t29.82 12.05q12.09 12.05 12.09 29.86 0 17.48-12.09 29.7-12.1 12.21-29.82 12.21t-29.82-12.21ZM640-238.09q-17.48 0-29.7-12.21-12.21-12.22-12.21-29.82t12.21-29.7q12.22-12.09 29.82-12.09t29.7 12.05q12.09 12.05 12.09 29.86 0 17.48-12.05 29.7-12.05 12.21-29.86 12.21Z"/></svg>
+                    <span>Calendar</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f"><path d="M235.2-279.59q51-38.52 113.52-60.54 62.52-22.02 131.28-22.02 68.76 0 131.64 22.38 62.88 22.38 113.16 60.42 34.29-41.24 53.31-91.92 19.02-50.69 19.02-108.73 0-131.57-92.78-224.35T480-797.13q-131.57 0-224.35 92.78T162.87-480q0 57.8 18.9 108.49 18.9 50.68 53.43 91.92Zm143.87-199.12q-40.98-40.86-40.98-100.81 0-59.96 40.98-100.94 40.97-40.97 100.93-40.97 59.96 0 100.93 40.97 40.98 40.98 40.98 100.94 0 59.95-40.98 100.81-40.97 40.86-100.93 40.86-59.96 0-100.93-40.86ZM480-71.87q-84.67 0-159.11-32.1-74.43-32.1-129.63-87.29-55.19-55.2-87.29-129.63-32.1-74.44-32.1-159.11 0-84.67 32.1-159.11 32.1-74.43 87.29-129.63 55.2-55.19 129.63-87.29 74.44-32.1 159.11-32.1 84.67 0 159.11 32.1 74.43 32.1 129.63 87.29 55.19 55.2 87.29 129.63 32.1 74.44 32.1 159.11 0 84.67-32.1 159.11-32.1 74.43-87.29 129.63-55.2 55.19-129.63 87.29-74.44 32.1-159.11 32.1Zm97.37-105.9q45.56-14.9 84.56-42.95-39.47-28.28-84.44-43.06-44.97-14.79-97.49-14.79-52.52 0-97.37 14.79-44.85 14.78-84.33 43.06 39 28.05 84.45 42.95 45.45 14.9 97.25 14.9t97.37-14.9Zm-55.8-360.19q16.52-16.52 16.52-41.56 0-25.05-16.52-41.69-16.53-16.64-41.57-16.64t-41.57 16.64q-16.52 16.64-16.52 41.69 0 25.04 16.52 41.56 16.53 16.53 41.57 16.53t41.57-16.53ZM480-579.52Zm.24 358.8Z"/></svg>
+                    <span>Profile</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <main>
+        <div class="container">
+            <h2>Random Headline 1</h2>
+            <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora nihil sapiente quidem quibusdam, vitae error itaque alias velit sequi natus aut ut facere ratione ad. Et minima reiciendis distinctio ratione.
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse quos cumque quo ipsa omnis modi explicabo impedit magnam laborum, blanditiis aut atque harum magni laudantium porro ut reiciendis ducimus doloremque!</p>
+        </div>
+        <div class="container">
+            <h2>Random Headline 2</h2>
+            <p> Lorem ipsum dolor sit, amet consectetur adipisicing elit. Laboriosam accusamus culpa ex ipsum fugit nemo sint itaque magnam debitis sequi? Impedit laudantium deleniti perspiciatis dolorem sit ducimus laboriosam vero velit?
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem necessitatibus distinctio quo alias asperiores hic laudantium. Ipsa sequi, facere corrupti placeat sed doloremque nobis dolorem minima, dignissimos illo quia cupiditate.
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse quos cumque quo ipsa omnis modi explicabo impedit magnam laborum, blanditiis aut atque harum magni laudantium porro ut reiciendis ducimus doloremque!</p>
+        </div>
+        <div class="container">
+            <h2>Random Headline 3</h2>
+            <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet, tenetur. Itaque illo fugiat in officia officiis optio delectus, voluptates praesentium voluptatum, aliquam magnam illum numquam, commodi magni. Consequuntur, minus voluptatibus!
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem eligendi esse laboriosam, vitae repellat nobis corrupti placeat sapiente consectetur saepe doloribus delectus totam rem corporis odit ipsum molestias. Non, soluta.
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse quos cumque quo ipsa omnis modi explicabo impedit magnam laborum, blanditiis aut atque harum magni laudantium porro ut reiciendis ducimus doloremque!</p>
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,24 @@
+body{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+.cells{
+    height: 100px;
+    background-color: aliceblue;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size:4.5rem;
+    font-family: monospace;
+    cursor: pointer;
+}
+#cellContainer{
+    display: grid;
+    grid-template-columns: 100px 100px 100px;
+    border: 1px solid black;
+}
+#newGame{
+    font-size: large;
+}

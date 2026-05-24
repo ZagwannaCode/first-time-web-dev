@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valorant Agent Tracker</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#0f1117;--bg2:#1a1d27;--bg3:#22263a;
+    --text:#e8eaf0;--text2:#8b8fa8;--text3:#555972;
+    --border:#2a2d3e;--red:#ff4655;
+  }
+  body{font-family:system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:24px 20px}
+  h1{font-size:22px;font-weight:500;margin-bottom:4px}
+  .subtitle{font-size:13px;color:var(--text2);margin-bottom:20px}
+  .top-bar{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:4px}
+  .reset-btn{background:transparent;border:1px solid var(--border);border-radius:8px;padding:6px 14px;font-size:12px;color:var(--text2);cursor:pointer}
+  .reset-btn:hover{background:var(--bg3);color:var(--text)}
+  .stats-row{display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap}
+  .stat-card{background:var(--bg2);border-radius:8px;padding:12px 16px;flex:1;min-width:100px}
+  .stat-label{font-size:12px;color:var(--text2);margin-bottom:4px}
+  .stat-val{font-size:22px;font-weight:500}
+  .filter-row{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;align-items:center}
+  .filter-btn{background:transparent;border:1px solid var(--border);border-radius:8px;padding:5px 12px;font-size:12px;cursor:pointer;color:var(--text2);transition:all .15s}
+  .filter-btn.active,.filter-btn:hover{background:var(--bg3);color:var(--text);border-color:#444}
+  .agents-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;margin-bottom:32px}
+  .agent-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden;cursor:pointer;transition:transform .1s,border-color .2s;user-select:none}
+  .agent-card:hover{transform:translateY(-3px);border-color:#444}
+  .agent-card:active{transform:scale(.97)}
+  .agent-card.highlight{border-color:var(--red);box-shadow:0 0 0 2px #ff465522}
+  .img-wrap{width:100%;aspect-ratio:1/1;overflow:hidden;position:relative;background:#111827;display:flex;align-items:center;justify-content:center}
+  .img-wrap img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+  .role-badge{position:absolute;top:5px;right:5px;border-radius:4px;padding:2px 6px;font-size:9px;color:#fff;text-transform:uppercase;letter-spacing:.5px;font-weight:600}
+  .ph-letter{font-size:36px;font-weight:500;color:#ffffff22}
+  .agent-info{padding:8px 9px 9px}
+  .agent-name{font-size:11px;font-weight:500;margin-bottom:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .agent-count{font-size:20px;font-weight:500;line-height:1}
+  .bar-wrap{height:3px;background:var(--bg3);border-radius:2px;margin-top:5px}
+  .bar{height:3px;border-radius:2px;transition:width .4s}
+  .tap-hint{font-size:9px;color:var(--text3);margin-top:3px}
+  .section-title{font-size:14px;font-weight:500;margin-bottom:12px}
+  .leaderboard{background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:32px}
+  .lb-row{display:flex;align-items:center;gap:12px;padding:10px 14px;border-bottom:1px solid var(--border)}
+  .lb-row:last-child{border-bottom:none}
+  .lb-rank{font-size:12px;font-weight:500;color:var(--text2);width:18px;text-align:center}
+  .lb-img{width:34px;height:34px;border-radius:7px;object-fit:cover;object-position:top;background:#111827;flex-shrink:0}
+  .lb-ph{width:34px;height:34px;border-radius:7px;background:#111827;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px;color:#ffffff33;font-weight:500}
+  .lb-name{flex:1;font-size:13px;font-weight:500;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .lb-role{font-size:11px}
+  .lb-count{font-size:13px;font-weight:500;flex-shrink:0}
+  .lb-bar-wrap{width:64px;height:4px;background:var(--bg3);border-radius:2px;flex-shrink:0}
+  .lb-bar{height:4px;border-radius:2px;transition:width .4s}
+  .wheel-section{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:24px;text-align:center;margin-bottom:32px}
+  .wheel-wrap{position:relative;display:inline-block;margin:16px auto}
+  .wheel-pointer{position:absolute;top:-10px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-top:18px solid var(--red)}
+  .spin-btn{margin-top:16px;background:var(--red);color:#fff;border:none;border-radius:8px;padding:11px 36px;font-size:14px;font-weight:500;cursor:pointer;transition:opacity .15s}
+  .spin-btn:hover{opacity:.85}
+  .spin-btn:disabled{opacity:.45;cursor:not-allowed}
+  .wheel-result{margin-top:12px;font-size:15px;font-weight:500;min-height:24px}
+  .status{text-align:center;padding:40px;color:var(--text2);font-size:13px}
+  a{color:var(--red)}
+</style>
+</head>
+<body>
+
+<div style="max-width:900px;margin:0 auto">
+  <div class="top-bar">
+    <div><h1>Agent Play Tracker</h1><p class="subtitle">Click an agent portrait to log a game played</p></div>
+    <button class="reset-btn" onclick="resetAll()">Reset all</button>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-label">Total games</div><div class="stat-val" id="s-total">0</div></div>
+    <div class="stat-card"><div class="stat-label">Agents played</div><div class="stat-val" id="s-played">0</div></div>
+    <div class="stat-card"><div class="stat-label">Most played</div><div class="stat-val" id="s-top" style="font-size:15px;padding-top:4px">—</div></div>
+  </div>
+
+  <div class="filter-row">
+    <span style="font-size:12px;color:var(--text2);margin-right:4px">Filter:</span>
+    <button class="filter-btn active" onclick="setFilter('all',this)">All</button>
+    <button class="filter-btn" onclick="setFilter('Duelist',this)">Duelist</button>
+    <button class="filter-btn" onclick="setFilter('Initiator',this)">Initiator</button>
+    <button class="filter-btn" onclick="setFilter('Controller',this)">Controller</button>
+    <button class="filter-btn" onclick="setFilter('Sentinel',this)">Sentinel</button>
+  </div>
+
+  <div class="agents-grid" id="grid"><div class="status">Loading agents...</div></div>
+
+  <p class="section-title">Top agents</p>
+  <div class="leaderboard" id="lb"></div>
+
+  <p class="section-title">Random agent wheel</p>
+  <div class="wheel-section">
+    <p style="font-size:13px;color:var(--text2)">Spin to randomly pick an agent to play</p>
+    <div class="wheel-wrap">
+      <div class="wheel-pointer"></div>
+      <canvas id="wheel" width="280" height="280"></canvas>
+    </div>
+    <div><button class="spin-btn" id="spin-btn" onclick="spinWheel()">Spin</button></div>
+    <div class="wheel-result" id="wheel-result"></div>
+  </div>
+</div>
+
+<script>
+const RC = {Duelist:"#ff4655",Initiator:"#48b09e",Controller:"#7b68ee",Sentinel:"#f0a500"};
+const STORAGE_KEY = "valo_tracker_v1";
+let AGENTS = [], counts = {}, filter = "all", spinning = false, wheelAngle = 0;
+
+function saveCounts() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(counts));
+}
+
+function loadCounts() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; }
+}
+
+async function init() {
+  const saved = loadCounts();
+  try {
+    const res = await fetch("https://valorant-api.com/v1/agents?isPlayableCharacter=true");
+    const json = await res.json();
+    AGENTS = json.data
+      .filter(a => a.isPlayableCharacter)
+      .map(a => ({
+        name: a.displayName,
+        role: a.role?.displayName || "Unknown",
+        img: a.displayIconSmall || a.displayIcon || ""
+      }))
+      .sort((a, b) => a.name.localeCompare(b.name));
+
+    AGENTS.forEach(a => { counts[a.name] = saved[a.name] || 0; });
+    render();
+    drawWheel();
+  } catch(e) {
+    document.getElementById("grid").innerHTML =
+      `<div class="status">Failed to load agents.<br>Make sure you're connected to the internet.<br><small>${e.message}</small></div>`;
+  }
+}
+
+function render() { renderGrid(); renderLB(); renderStats(); }
+
+function renderGrid() {
+  const max = Math.max(1, ...Object.values(counts));
+  const grid = document.getElementById("grid");
+  grid.innerHTML = "";
+  const list = filter === "all" ? AGENTS : AGENTS.filter(a => a.role === filter);
+  list.forEach(a => {
+    const pct = Math.round((counts[a.name] / max) * 100);
+    const col = RC[a.role] || "#888";
+    const d = document.createElement("div");
+    d.className = "agent-card";
+    d.id = "c_" + a.name.replace(/\W/g, "_");
+    d.innerHTML = `
+      <div class="img-wrap">
+        <img src="${a.img}" alt="${a.name}" loading="lazy"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="ph-letter" style="display:none">${a.name[0]}</div>
+        <div class="role-badge" style="background:${col}33;color:${col}">${a.role}</div>
+      </div>
+      <div class="agent-info">
+        <div class="agent-name">${a.name}</div>
+        <div class="agent-count" style="color:${counts[a.name]>0?col:'#555972'}">${counts[a.name]}</div>
+        <div class="bar-wrap"><div class="bar" style="width:${pct}%;background:${col}"></div></div>
+        <div class="tap-hint">click to add</div>
+      </div>`;
+    d.onclick = () => increment(a.name);
+    grid.appendChild(d);
+  });
+}
+
+function renderLB() {
+  const sorted = [...AGENTS].sort((a,b) => counts[b.name]-counts[a.name]).slice(0,8);
+  const max = Math.max(1, counts[sorted[0]?.name] || 1);
+  document.getElementById("lb").innerHTML = sorted.map((a,i) => {
+    const pct = Math.round((counts[a.name]/max)*100);
+    const col = RC[a.role] || "#888";
+    return `<div class="lb-row">
+      <div class="lb-rank">${i+1}</div>
+      <img class="lb-img" src="${a.img}" alt="${a.name}"
+        onerror="this.outerHTML='<div class=lb-ph>${a.name[0]}</div>'">
+      <div style="flex:1;min-width:0">
+        <div class="lb-name">${a.name}</div>
+        <div class="lb-role" style="color:${col}">${a.role}</div>
+      </div>
+      <div class="lb-bar-wrap"><div class="lb-bar" style="width:${pct}%;background:${col}"></div></div>
+      <div class="lb-count">${counts[a.name]}</div>
+    </div>`;
+  }).join("");
+}
+
+function renderStats() {
+  const total = Object.values(counts).reduce((s,v)=>s+v,0);
+  const played = Object.values(counts).filter(v=>v>0).length;
+  const top = [...AGENTS].sort((a,b)=>counts[b.name]-counts[a.name])[0];
+  document.getElementById("s-total").textContent = total;
+  document.getElementById("s-played").textContent = played;
+  document.getElementById("s-top").textContent = top && counts[top.name]>0 ? top.name : "—";
+}
+
+function playClick() {
+  try {
+    const c = new(window.AudioContext||window.webkitAudioContext)();
+    const o=c.createOscillator(), g=c.createGain();
+    o.connect(g); g.connect(c.destination);
+    o.frequency.setValueAtTime(880, c.currentTime);
+    o.frequency.exponentialRampToValueAtTime(440, c.currentTime+.08);
+    g.gain.setValueAtTime(.25, c.currentTime);
+    g.gain.exponentialRampToValueAtTime(.001, c.currentTime+.15);
+    o.start(); o.stop(c.currentTime+.15);
+  } catch {}
+}
+
+function playWin() {
+  try {
+    const c = new(window.AudioContext||window.webkitAudioContext)();
+    [523,659,784,1047].forEach((f,i) => {
+      const o=c.createOscillator(), g=c.createGain();
+      o.connect(g); g.connect(c.destination);
+      const t=c.currentTime+i*.1;
+      o.frequency.setValueAtTime(f,t);
+      g.gain.setValueAtTime(.2,t);
+      g.gain.exponentialRampToValueAtTime(.001,t+.18);
+      o.start(t); o.stop(t+.18);
+    });
+  } catch {}
+}
+
+function increment(name) {
+  counts[name]++;
+  saveCounts();
+  playClick();
+  const el = document.getElementById("c_"+name.replace(/\W/g,"_"));
+  if (el) { el.classList.add("highlight"); setTimeout(()=>el.classList.remove("highlight"),600); }
+  render();
+}
+
+function setFilter(f, btn) {
+  filter = f;
+  document.querySelectorAll(".filter-btn").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+  renderGrid();
+}
+
+function resetAll() {
+  if (!confirm("Reset all play counts?")) return;
+  AGENTS.forEach(a => counts[a.name]=0);
+  saveCounts();
+  render();
+}
+
+function drawWheel(hi=-1) {
+  if (!AGENTS.length) return;
+  const cv=document.getElementById("wheel"), ctx=cv.getContext("2d");
+  const cx=140,cy=140,r=130,n=AGENTS.length,arc=(2*Math.PI)/n;
+  ctx.clearRect(0,0,280,280);
+  AGENTS.forEach((a,i) => {
+    const s=i*arc-Math.PI/2, mid=s+arc/2, col=RC[a.role]||"#888";
+    ctx.beginPath(); ctx.moveTo(cx,cy); ctx.arc(cx,cy,r,s,s+arc); ctx.closePath();
+    ctx.fillStyle = i===hi ? "#ffffff" : (i%2===0 ? col+"cc" : col+"55");
+    ctx.fill(); ctx.strokeStyle="#ffffff18"; ctx.lineWidth=.8; ctx.stroke();
+    ctx.save();
+    ctx.translate(cx+Math.cos(mid)*85, cy+Math.sin(mid)*85);
+    ctx.rotate(mid+Math.PI/2);
+    ctx.fillStyle = i===hi ? col : "#fff";
+    ctx.font = "bold 7px system-ui"; ctx.textAlign="center";
+    ctx.fillText(a.name.length>9?a.name.slice(0,8)+"…":a.name, 0, 0);
+    ctx.restore();
+  });
+  ctx.beginPath(); ctx.arc(cx,cy,22,0,2*Math.PI);
+  ctx.fillStyle="#ff4655"; ctx.fill();
+  ctx.fillStyle="#fff"; ctx.font="bold 10px system-ui";
+  ctx.textAlign="center"; ctx.textBaseline="middle";
+  ctx.fillText("GO",cx,cy);
+}
+
+function spinWheel() {
+  if (spinning||!AGENTS.length) return;
+  spinning=true;
+  document.getElementById("spin-btn").disabled=true;
+  document.getElementById("wheel-result").textContent="";
+  const extra=Math.PI*2*(8+Math.random()*6);
+  const dur=3500, t0=performance.now(), a0=wheelAngle;
+  function step(now) {
+    const t=Math.min((now-t0)/dur,1), ease=1-Math.pow(1-t,4);
+    wheelAngle=a0+extra*ease;
+    const n=AGENTS.length, arc=(2*Math.PI)/n;
+    const norm=((2*Math.PI-(wheelAngle%(2*Math.PI)))+Math.PI/2+arc/2)%(2*Math.PI);
+    const idx=Math.floor(norm/arc)%n;
+    const cv=document.getElementById("wheel"), c2=cv.getContext("2d");
+    c2.save(); c2.translate(140,140); c2.rotate(wheelAngle%(2*Math.PI)); c2.translate(-140,-140);
+    drawWheel(t>.85?idx:-1);
+    c2.restore();
+    if (t<1){requestAnimationFrame(step);return;}
+    const fn=((2*Math.PI-(wheelAngle%(2*Math.PI)))+Math.PI/2+arc/2)%(2*Math.PI);
+    const fi=Math.floor(fn/arc)%n;
+    const p=AGENTS[fi], col=RC[p.role]||"#888";
+    document.getElementById("wheel-result").innerHTML=`<span style="color:${col}">●</span> Play <strong>${p.name}</strong>!`;
+    playWin();
+    const el=document.getElementById("c_"+p.name.replace(/\W/g,"_"));
+    if(el){el.scrollIntoView({behavior:"smooth",block:"center"});el.classList.add("highlight");setTimeout(()=>el.classList.remove("highlight"),1200);}
+    spinning=false;
+    document.getElementById("spin-btn").disabled=false;
+  }
+  requestAnimationFrame(step);
+}
+
+init();
+</script>
+</body>
+</html>

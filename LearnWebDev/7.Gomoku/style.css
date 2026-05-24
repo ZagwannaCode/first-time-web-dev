@@ -1,0 +1,95 @@
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: 'Arial Narrow Bold', sans-serif;
+}
+.cell{
+    font-weight: bold;
+    padding: none;
+    border: 1px solid rgba(254, 203, 152, 0.258);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background-color:rgb(255, 241, 221);
+}
+.cell.X {
+  color: #f64f3c;
+  cursor:default;
+}
+
+.cell.O {
+  color: #42abf1;
+  cursor:default;
+}
+
+.cell:hover {
+    background-color: bisque;
+}
+.cell.win{
+    background-color: #ffcb77bb;
+}
+body{
+    background-color: rgb(246, 238, 214);
+    font-family: Verdana;
+    font-size: large;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#container{
+    background-color: rgb(255, 251, 220);
+    border: 2px solid rgba(234, 136, 71, 0.533);
+    width: 600px;
+    height: 600px;
+    margin-bottom: 7vh;
+    display: grid;
+    grid-template-columns: repeat(15, 1fr);
+    grid-template-rows: repeat(15, 1fr);
+}
+#gameTitle{
+    
+    font-family:monospace;
+    font-size: xx-large;
+    position: absolute;
+    color: rgb(17, 179, 182);
+    top: 3vh;
+}
+#state{
+    margin-bottom: 10px;
+    position: absolute;
+    bottom: 8vh;
+    font-size: 2rem;
+    font-weight: bold;
+}
+.state.X {
+  color: #f64f3c;
+}
+
+.state.O {
+  color: #42abf1;
+}
+#restart{
+    border: none;
+    background-color: rgb(191, 255, 234);
+    color: rgb(235, 143, 85);
+    font-size: large;
+    position: absolute;
+    bottom: 5vh;
+    padding: 6px;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+#restart:hover{
+    background-color: rgb(88, 185, 153);
+    color: rgb(250, 235, 188);
+    font-size: larger;
+}
+#restart:active{
+    background-color: rgb(58, 203, 184);
+    color: rgb(255, 255, 211);
+    font-size: larger;
+}

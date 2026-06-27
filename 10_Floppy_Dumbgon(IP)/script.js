@@ -64,12 +64,36 @@ const state = {
     birdDir: 0,
     birdVel: 0,
     birdAce: 10,
+
+    bgMusic: false
 };
 
 let lastTime = 0;
 let deltaTime;
 let sinceLastPipe = 0;
 let sinceStart = 0;
+
+
+//Audio
+const Music = {
+    bgMusic: [
+        new Audio("./sounds/BG_Music/1.wav"),
+        new Audio("./sounds/BG_Music/Happy01.wav"),
+        new Audio("./sounds/BG_Music/Sad01.wav"),
+        new Audio("./sounds/BG_Music/Sad02.wav")
+    ],
+    flap: new Audio("./sounds/Flap.m4a"),
+    Hit: new Audio("./sounds/HitSound.m4a"),
+    SettingUI: new Audio("./sounds/SettingUI.m4a"),
+    SettingValueUp: new Audio("./sounds/SettingValueUp.m4a"),
+    SettingValueDown: new Audio("./sounds/SettingValueDown.m4a")
+}
+Music.bgMusic.forEach(song => {
+    song.volume = 0.3;
+    song.addEventListener("ended", toNextSong)
+})
+let curSong = 0;
+
 
 setUpUI();
 playerImage.onload = init;
@@ -89,8 +113,11 @@ function init(){
 function loop(ts){
     deltaTime = Math.min((ts - lastTime)/1000 , 0.05);
     lastTime = ts;
+
     update(deltaTime);
     render();
+    handleMusic();
+
     if(state.isRunning) {requestAnimationFrame(loop)};
 }
 
@@ -160,6 +187,9 @@ function updateBird(dt){
         playerAction = 1;
         playerFrame = 0;
 
+        Music.flap.currentTime = 0.15;
+        Music.flap.play();
+
         state.flap = false;
     }
 
@@ -196,9 +226,10 @@ function updatePipes(dt){
 }
 
 function checkCollions(){
+    let isHit = false;
     if(state.birdY <= 0 ||
        state.birdY >= 500){
-        state.isRunning = false;
+        isHit = true;
     }
     for(let i = 0; i < state.pipes.length; i++){
         if(state.birdX + state.birdHitBoxX/2 >= state.pipes[i].x &&
@@ -207,10 +238,15 @@ function checkCollions(){
            (state.birdY - state.birdHitBoxY/2 <= state.pipes[i].gapY ||
            state.birdY + state.birdHitBoxY/2 >= state.pipes[i].gapY + state.pipes[i].gap)
         ){
-            state.isRunning = false;
+            isHit = true;
         }
     }
+    if(isHit) {
+        state.isRunning = false;
 
+        Music.Hit.currentTime = 0.33;
+        Music.Hit.play();
+    }
 }
 
 function getRandomBetween(min, max){
@@ -260,6 +296,8 @@ function HandleToggleBtn(e) {
     if((!settingTargeted && !setting.classList.contains("close"))
        || iconSettingTargeted) {
         setting.classList.toggle("close");
+        Music.SettingUI.currentTime = 0.1;
+        Music.SettingUI.play();
     }
 }
 function UpdateGameState(e) {
@@ -275,12 +313,42 @@ function UpdateGameState(e) {
 function UpdateSettingValues (dataSetting, dataAction) {
     if(dataAction == "increase") {
         settingValues[dataSetting] = Math.round(settingValues[dataSetting] * 10 + 1) / 10;
+
+        Music.SettingValueUp.currentTime = 0.1;
+        Music.SettingValueUp.play();
     }else{
         settingValues[dataSetting] = Math.round(settingValues[dataSetting] * 10 - 1) / 10;
+
+        Music.SettingValueDown.currentTime = 0.1;
+        Music.SettingValueDown.play();
     };
     state[dataSetting] = standardSettingState[dataSetting] * settingValues[dataSetting];
 }
 function UpdateSettingUI (li) {
     const values = li.querySelector(".scaler");
     values.textContent = settingValues[li.dataset.setting];
+}
+
+function handleMusic() {
+    if(state.isRunning && !state.bgMusic) {
+        state.bgMusic = true;
+        playCurrentSong();
+    }else if (!state.isRunning && state.bgMusic) {
+        state.bgMusic = false;
+        pauseCurrentSong();
+        }
+}
+
+function playCurrentSong() {
+    Music.bgMusic[curSong].play();
+}
+
+function pauseCurrentSong() {
+    Music.bgMusic[curSong].pause();
+}
+
+function toNextSong() {
+    curSong = (curSong + 1) % Music.bgMusic.length;
+    playCurrentSong();
+    console.log(curSong)
 }
